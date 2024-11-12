@@ -1,0 +1,48 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "3207028546fed7af6c2b0a667b17a2fa"
+name = "extensive-upside-app"
+handle = "extensive-upside-app-11"
+application_url = "https://enhancing-skilled-link-deutsche.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "quickstart-3e2e3242.myshopify.com"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://example.com/api/auth",
+  "https://mia-gasoline-clicks-doc.trycloudflare.com/auth/callback",
+  "https://mia-gasoline-clicks-doc.trycloudflare.com/auth/shopify/callback",
+  "https://mia-gasoline-clicks-doc.trycloudflare.com/api/auth/callback",
+  "https://mysimon-outer-suppliers-plaintiff.trycloudflare.com/auth/callback",
+  "https://mysimon-outer-suppliers-plaintiff.trycloudflare.com/auth/shopify/callback",
+  "https://mysimon-outer-suppliers-plaintiff.trycloudflare.com/api/auth/callback",
+  "https://locked-list-spouse-congress.trycloudflare.com/auth/callback",
+  "https://locked-list-spouse-congress.trycloudflare.com/auth/shopify/callback",
+  "https://locked-list-spouse-congress.trycloudflare.com/api/auth/callback",
+  "https://cite-tractor-jade-bahamas.trycloudflare.com/auth/callback",
+  "https://cite-tractor-jade-bahamas.trycloudflare.com/auth/shopify/callback",
+  "https://cite-tractor-jade-bahamas.trycloudflare.com/api/auth/callback",
+  "https://anderson-yu-inventory-stewart.trycloudflare.com/auth/callback",
+  "https://anderson-yu-inventory-stewart.trycloudflare.com/auth/shopify/callback",
+  "https://anderson-yu-inventory-stewart.trycloudflare.com/api/auth/callback",
+  "https://enhancing-skilled-link-deutsche.trycloudflare.com/auth/callback",
+  "https://enhancing-skilled-link-deutsche.trycloudflare.com/auth/shopify/callback",
+  "https://enhancing-skilled-link-deutsche.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+[pos]
+embedded = false

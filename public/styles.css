@@ -1,0 +1,10 @@
+.global-input-container {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 16px;
+    align-items: center;
+}
+
+.global-input-container > button {
+    margin-bottom: -20px;
+}
