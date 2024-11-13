@@ -3,7 +3,7 @@
 client_id = "3207028546fed7af6c2b0a667b17a2fa"
 name = "extensive-upside-app"
 handle = "extensive-upside-app-11"
-application_url = "https://practitioners-fits-failing-df.trycloudflare.com"
+application_url = "https://arbitration-ur-trivia-participating.trycloudflare.com"
 embedded = true
 
 [build]
@@ -41,7 +41,13 @@ redirect_urls = [
   "https://jets-photography-chart-laden.trycloudflare.com/api/auth/callback",
   "https://practitioners-fits-failing-df.trycloudflare.com/auth/callback",
   "https://practitioners-fits-failing-df.trycloudflare.com/auth/shopify/callback",
-  "https://practitioners-fits-failing-df.trycloudflare.com/api/auth/callback"
+  "https://practitioners-fits-failing-df.trycloudflare.com/api/auth/callback",
+  "https://optimize-lu-congo-yeah.trycloudflare.com/auth/callback",
+  "https://optimize-lu-congo-yeah.trycloudflare.com/auth/shopify/callback",
+  "https://optimize-lu-congo-yeah.trycloudflare.com/api/auth/callback",
+  "https://arbitration-ur-trivia-participating.trycloudflare.com/auth/callback",
+  "https://arbitration-ur-trivia-participating.trycloudflare.com/auth/shopify/callback",
+  "https://arbitration-ur-trivia-participating.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

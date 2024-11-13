@@ -101,7 +101,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         if (mutationResponseJson.data.metafieldsSet.userErrors.length > 0) {
             throw new Error(mutationResponseJson.data.metafieldsSet.userErrors[0].message);
         }
-        console.log("Metafields SetTTY: ", mutationResponseJson.data.metafieldsSet.metafields);
+        
         return json({
             metafields: mutationResponseJson.data.metafieldsSet.metafields,
         });
@@ -146,7 +146,6 @@ export default function ProductsPage() {
 
     const [addToCartNameStates, setAddToCartNameStates] = useState<{ [key: string]: string }>({});
     const [loadingStates, setLoadingStates] = useState<{ [key: string]: boolean }>({});
-    const [addToCartNameGlobally, setAddToCartNameGlobally] = useState<string>('');
     const [productIdHolder, setProductIdHolder] = useState<string>('');
     const [errorStates, setErrorStates] = useState<{ [key: string]: string }>({});
     const [userInteracted, setUserInteracted] = useState<{ [key: string]: boolean }>({});
@@ -185,11 +184,6 @@ export default function ProductsPage() {
 
     return (
         <Page title="Products">
-            <div className="global-input-container">
-                <TextField label="Set Add to Cart Name (Globally)" type="text" value={addToCartNameGlobally} autoComplete="off" onChange={(value) => setAddToCartNameGlobally(value)}/>
-                <Button variant="primary">Submit</Button>
-            </div>
-            <Divider/>
             <Card>
                 <DataTable
                     columnContentTypes={[
