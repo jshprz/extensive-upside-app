@@ -3,12 +3,13 @@
 client_id = "3207028546fed7af6c2b0a667b17a2fa"
 name = "extensive-upside-app"
 handle = "extensive-upside-app-11"
-application_url = "https://jets-photography-chart-laden.trycloudflare.com"
+application_url = "https://practitioners-fits-failing-df.trycloudflare.com"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
 dev_store_url = "quickstart-3e2e3242.myshopify.com"
+include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
@@ -37,7 +38,10 @@ redirect_urls = [
   "https://enhancing-skilled-link-deutsche.trycloudflare.com/api/auth/callback",
   "https://jets-photography-chart-laden.trycloudflare.com/auth/callback",
   "https://jets-photography-chart-laden.trycloudflare.com/auth/shopify/callback",
-  "https://jets-photography-chart-laden.trycloudflare.com/api/auth/callback"
+  "https://jets-photography-chart-laden.trycloudflare.com/api/auth/callback",
+  "https://practitioners-fits-failing-df.trycloudflare.com/auth/callback",
+  "https://practitioners-fits-failing-df.trycloudflare.com/auth/shopify/callback",
+  "https://practitioners-fits-failing-df.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

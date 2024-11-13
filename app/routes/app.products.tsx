@@ -10,7 +10,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
     const query = `
         query {
-            products(first: 50) {
+            products(first: 100) {
                 edges {
                     node {
                         id
