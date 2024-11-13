@@ -180,6 +180,7 @@ export default function ProductsPage() {
     const handleInputChange = (value: string, productId: string) => {
         setAddToCartNameStates((prevState) => ({ ...prevState, [productId]: value }));
         setUserInteracted((prevState) => ({ ...prevState, [productId]: true }));
+        setErrorStates((prevState) => ({ ...prevState, [productId]: '' }));
     };
 
     return (

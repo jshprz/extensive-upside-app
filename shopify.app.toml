@@ -3,7 +3,7 @@
 client_id = "3207028546fed7af6c2b0a667b17a2fa"
 name = "extensive-upside-app"
 handle = "extensive-upside-app-11"
-application_url = "https://enhancing-skilled-link-deutsche.trycloudflare.com"
+application_url = "https://jets-photography-chart-laden.trycloudflare.com"
 embedded = true
 
 [build]
@@ -34,7 +34,10 @@ redirect_urls = [
   "https://anderson-yu-inventory-stewart.trycloudflare.com/api/auth/callback",
   "https://enhancing-skilled-link-deutsche.trycloudflare.com/auth/callback",
   "https://enhancing-skilled-link-deutsche.trycloudflare.com/auth/shopify/callback",
-  "https://enhancing-skilled-link-deutsche.trycloudflare.com/api/auth/callback"
+  "https://enhancing-skilled-link-deutsche.trycloudflare.com/api/auth/callback",
+  "https://jets-photography-chart-laden.trycloudflare.com/auth/callback",
+  "https://jets-photography-chart-laden.trycloudflare.com/auth/shopify/callback",
+  "https://jets-photography-chart-laden.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
