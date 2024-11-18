@@ -1,4 +1,4 @@
-# Shopify App - Remix
+# Shopify App - Remix Template
 
 This is a template for building a [Shopify app](https://shopify.dev/docs/apps/getting-started) using the [Remix](https://remix.run) framework.
 
