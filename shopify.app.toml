@@ -3,7 +3,7 @@
 client_id = "3207028546fed7af6c2b0a667b17a2fa"
 name = "extensive-upside-app"
 handle = "extensive-upside-app-11"
-application_url = "https://arbitration-ur-trivia-participating.trycloudflare.com"
+application_url = "https://affordable-ent-take-killing.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,37 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://example.com/api/auth",
-  "https://mia-gasoline-clicks-doc.trycloudflare.com/auth/callback",
-  "https://mia-gasoline-clicks-doc.trycloudflare.com/auth/shopify/callback",
-  "https://mia-gasoline-clicks-doc.trycloudflare.com/api/auth/callback",
-  "https://mysimon-outer-suppliers-plaintiff.trycloudflare.com/auth/callback",
-  "https://mysimon-outer-suppliers-plaintiff.trycloudflare.com/auth/shopify/callback",
-  "https://mysimon-outer-suppliers-plaintiff.trycloudflare.com/api/auth/callback",
-  "https://locked-list-spouse-congress.trycloudflare.com/auth/callback",
-  "https://locked-list-spouse-congress.trycloudflare.com/auth/shopify/callback",
-  "https://locked-list-spouse-congress.trycloudflare.com/api/auth/callback",
-  "https://cite-tractor-jade-bahamas.trycloudflare.com/auth/callback",
-  "https://cite-tractor-jade-bahamas.trycloudflare.com/auth/shopify/callback",
-  "https://cite-tractor-jade-bahamas.trycloudflare.com/api/auth/callback",
-  "https://anderson-yu-inventory-stewart.trycloudflare.com/auth/callback",
-  "https://anderson-yu-inventory-stewart.trycloudflare.com/auth/shopify/callback",
-  "https://anderson-yu-inventory-stewart.trycloudflare.com/api/auth/callback",
-  "https://enhancing-skilled-link-deutsche.trycloudflare.com/auth/callback",
-  "https://enhancing-skilled-link-deutsche.trycloudflare.com/auth/shopify/callback",
-  "https://enhancing-skilled-link-deutsche.trycloudflare.com/api/auth/callback",
-  "https://jets-photography-chart-laden.trycloudflare.com/auth/callback",
-  "https://jets-photography-chart-laden.trycloudflare.com/auth/shopify/callback",
-  "https://jets-photography-chart-laden.trycloudflare.com/api/auth/callback",
-  "https://practitioners-fits-failing-df.trycloudflare.com/auth/callback",
-  "https://practitioners-fits-failing-df.trycloudflare.com/auth/shopify/callback",
-  "https://practitioners-fits-failing-df.trycloudflare.com/api/auth/callback",
-  "https://optimize-lu-congo-yeah.trycloudflare.com/auth/callback",
-  "https://optimize-lu-congo-yeah.trycloudflare.com/auth/shopify/callback",
-  "https://optimize-lu-congo-yeah.trycloudflare.com/api/auth/callback",
-  "https://arbitration-ur-trivia-participating.trycloudflare.com/auth/callback",
-  "https://arbitration-ur-trivia-participating.trycloudflare.com/auth/shopify/callback",
-  "https://arbitration-ur-trivia-participating.trycloudflare.com/api/auth/callback"
+  "https://affordable-ent-take-killing.trycloudflare.com/auth/callback",
+  "https://affordable-ent-take-killing.trycloudflare.com/auth/shopify/callback",
+  "https://affordable-ent-take-killing.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

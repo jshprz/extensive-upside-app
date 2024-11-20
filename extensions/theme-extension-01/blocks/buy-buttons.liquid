@@ -1,0 +1,28 @@
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const addToCartButton = document.querySelectorAll('[id^="ProductSubmitButton-"]');
+
+        addToCartButton.forEach(button => {
+          const textElement = button.querySelector('span');
+            if (textElement) {
+                textElement.textContent = '{{ product.metafields.custom.button_add_to_cart_text | escape }}' || 'Add to Cart';
+            }
+        });
+    });
+  </script>
+  
+  {% schema %}
+  {
+    "name": "Buy Buttons Embed",
+    "target": "body",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_buy_buttons",
+        "label": "Enable Custom Buy Buttons",
+        "default": true
+      }
+    ]
+  }
+  {% endschema %}
+  
