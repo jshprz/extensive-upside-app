@@ -3,7 +3,7 @@
 client_id = "3207028546fed7af6c2b0a667b17a2fa"
 name = "extensive-upside-app"
 handle = "extensive-upside-app-11"
-application_url = "https://affordable-ent-take-killing.trycloudflare.com"
+application_url = "https://polar-picture-adapted-instant.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://affordable-ent-take-killing.trycloudflare.com/auth/callback",
-  "https://affordable-ent-take-killing.trycloudflare.com/auth/shopify/callback",
-  "https://affordable-ent-take-killing.trycloudflare.com/api/auth/callback"
+  "https://polar-picture-adapted-instant.trycloudflare.com/auth/callback",
+  "https://polar-picture-adapted-instant.trycloudflare.com/auth/shopify/callback",
+  "https://polar-picture-adapted-instant.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
