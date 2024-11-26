@@ -3,13 +3,13 @@
 client_id = "1fed0065b9d95874dbe1ae069cd2ea13"
 name = "josh-dev"
 handle = "josh-dev"
-application_url = "https://walter-eng-phrases-freight.trycloudflare.com"
+application_url = "https://which-sr-barry-stage.trycloudflare.com"
 embedded = true
 
 [build]
-include_config_on_deploy = true
-dev_store_url = "preorderapp1.myshopify.com"
 automatically_update_urls_on_dev = true
+dev_store_url = "preorderapp1.myshopify.com"
+include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://walter-eng-phrases-freight.trycloudflare.com/auth/callback",
-  "https://walter-eng-phrases-freight.trycloudflare.com/auth/shopify/callback",
-  "https://walter-eng-phrases-freight.trycloudflare.com/api/auth/callback"
+  "https://which-sr-barry-stage.trycloudflare.com/auth/callback",
+  "https://which-sr-barry-stage.trycloudflare.com/auth/shopify/callback",
+  "https://which-sr-barry-stage.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
