@@ -1,17 +1,11 @@
 import {
-    BlockStack,
-    Box,
     Button,
     Card,
     Form,
     FormLayout,
-    InlineStack,
     Layout,
-    LegacyCard,
     Page,
     Select,
-    Tabs,
-    Text,
     TextField,
   } from "@shopify/polaris";
   import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
@@ -93,33 +87,34 @@ import {
     const shopify = useAppBridge();
     const fetcher = useFetcher();
     const data = useLoaderData<ShopifyStoreThemeCustomContent>();
+    const createdShopifyStoreThemeCustomContent = fetcher.data as ShopifyStoreThemeCustomContent;
+    
     const [addToCartName, setAddToCartName] = useState<string>(data.value);
     const [error, setError] = useState<string | undefined>(undefined);
+    const [value, setValue] = useState('');
+    const [selectedLanguage, setSelectedLanguage] = useState('English');
+    const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   
     const handleSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      const formData = new FormData(event.currentTarget);
-      formData.set('add-to-cart-name', addToCartName);
-      fetcher.submit(formData, { method: 'post' });
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        formData.set('add-to-cart-name', addToCartName);
+        fetcher.submit(formData, { method: 'post' });
     }, [fetcher, addToCartName]);
-  
-    const createdShopifyStoreThemeCustomContent = fetcher.data as ShopifyStoreThemeCustomContent;
-  
+
     useEffect(() => {
-      if (fetcher.data && (fetcher.data as { error?: string }).error) {
-        setError((fetcher.data as { error?: string }).error);
-      } else {
-        setError(undefined);
-      }
+        if (fetcher.data && (fetcher.data as { error?: string }).error) {
+          setError((fetcher.data as { error?: string }).error);
+        } else {
+          setError(undefined);
+        }
     }, [fetcher.data]);
   
     useEffect(() => {
-      if (createdShopifyStoreThemeCustomContent && createdShopifyStoreThemeCustomContent.id) {
-        shopify.toast.show("Add to cart name updated successfully!");
-      }
+        if (createdShopifyStoreThemeCustomContent && createdShopifyStoreThemeCustomContent.id) {
+          shopify.toast.show("Add to cart name updated successfully!");
+        }
     }, [createdShopifyStoreThemeCustomContent, shopify]);
-
-    const [selectedLanguage, setSelectedLanguage] = useState('today');
 
     const handleSelectChange = useCallback(
         (value: string) => setSelectedLanguage(value),
@@ -132,63 +127,87 @@ import {
         {label: 'German', value: 'german'},
     ];
 
-    const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+    const handleTabChange = useCallback((selectedIndex: React.SetStateAction<number>) => {
+        setSelectedTabIndex(selectedIndex);
+    }, []);
 
-  const handleTabChange = useCallback((selectedIndex: React.SetStateAction<number>) => {
-    setSelectedTabIndex(selectedIndex);
-  }, []);
+    const handleChange = useCallback(
+        (newValue: string) => setValue(newValue),
+        [],
+    );
 
-  const tabs = [
-    {
-      id: 'all-customers',
-      content: 'English',
-      accessibilityLabel: 'All customers',
-      panelID: 'all-customers-content',
-    },
-  ];
+    const tabs = [
+        {
+            id: 'all-customers',
+            content: 'English',
+            accessibilityLabel: 'All customers',
+            panelID: 'all-customers-content',
+        },
+    ];
   
     return (
       <Page>
         <TitleBar title="Settings" />
         <Layout>
           <Layout.Section>
-            <Card>
-                <Form onSubmit={handleSubmit}>
-                  <FormLayout>
-                    <Select
-                        label="Languages"
-                        options={options}
-                        onChange={handleSelectChange}
-                        value={selectedLanguage}
-                    />
-                    <TextField
-                      label="Add to Cart Button Text"
-                      value={addToCartName}
-                      onChange={(value) => setAddToCartName(value)}
-                      error={error}
-                      autoComplete="off"
-                    />
-                    <div className="flex border-b">
-                        {tabs.map((tab, index) => (
-                            <button
-                                key={tab.id}
-                                onClick={() => setSelectedTabIndex(index)}
-                                className={`py-2 px-4 ${
-                                    selectedTabIndex === index
-                                    ? 'border-b-4 border-[#1aab87] text-[#000000]'
-                                    : 'hover:text-gray-800'
-                                }`}
-                            >
-                                {tab.content}
-                            </button>
-                        ))}
-                    </div>
-                    <Button variant="primary" submit loading={fetcher.state === 'submitting'} fullWidth>
-                      Save
-                    </Button>
-                  </FormLayout>
-                </Form>
-            </Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card>
+                    <Form onSubmit={handleSubmit}>
+                      <FormLayout>
+                        <Select
+                            label="Languages"
+                            options={options}
+                            onChange={handleSelectChange}
+                            value={selectedLanguage}
+                        />
+                        <TextField
+                          label="Add to Cart Button Text"
+                          value={addToCartName}
+                          onChange={(value) => setAddToCartName(value)}
+                          error={error}
+                          autoComplete="off"
+                        />
+                        <Button variant="primary" submit loading={fetcher.state === 'submitting'} fullWidth>
+                          Save
+                        </Button>
+                      </FormLayout>
+                    </Form>
+                </Card>
+                <Card>
+                    <Form onSubmit={handleSubmit}>
+                        <FormLayout>
+                            <div className="flex border-b">
+                                {tabs.map((tab, index) => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => setSelectedTabIndex(index)}
+                                        className={`py-2 px-4 ${
+                                            selectedTabIndex === index
+                                            ? 'border-b-4 border-[#1aab87] text-[#000000]'
+                                            : 'hover:text-gray-800'
+                                        }`}
+                                    >
+                                        {tab.content}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="p-2">
+                                <h1><b>Custom Note</b></h1>
+                                <TextField
+                                    label="Add in a custom note with your pre-order. This will display below the pre-order button on your product page (Support HTML syntax)"
+                                    value={value}
+                                    onChange={handleChange}
+                                    multiline={4}
+                                    autoComplete="off"
+                                />
+                            </div>
+                            <Button variant="primary" submit loading={fetcher.state === 'submitting'} fullWidth>
+                              Save
+                            </Button>
+                        </FormLayout>
+                    </Form>
+                </Card>
+            </div>
           </Layout.Section>
         </Layout>
       </Page>
