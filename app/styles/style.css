@@ -1,0 +1,25 @@
+.flex {
+    display: flex;
+    border-bottom: 1px solid #e5e7eb; /* Light gray border */
+}
+  
+/* Tab button styles */
+.tab-button {
+    padding: 0.5rem 1rem; /* Equal to py-2 px-4 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6b7280; /* Default gray text */
+    transition: color 0.3s ease; /* Smooth hover effect */
+}
+  
+.tab-button:hover {
+    color: #374151; /* Darker gray text on hover */
+}
+
+/* Active tab styles */
+.tab-button.active {
+    border-bottom: 4px solid #1aab87; /* Green underline */
+    color: #000; /* Black text */
+}
+  

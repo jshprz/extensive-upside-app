@@ -1,9 +1,11 @@
 import { ActionFunctionArgs, json, LoaderFunctionArgs } from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import { useAppBridge } from "@shopify/app-bridge-react";
+import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { Button, Card, DataTable, Divider, Page, TextField, Thumbnail } from "@shopify/polaris";
 import { authenticate } from "app/shopify.server";
 import { useEffect, useState } from "react";
+import ProductTable from "app/components/products-page/ProductTable";
+import AddProduct from "app/components/products-page/AddProduct";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const { admin } = await authenticate.admin(request);
@@ -182,56 +184,18 @@ export default function ProductsPage() {
         setErrorStates((prevState) => ({ ...prevState, [productId]: '' }));
     };
 
-    return (
-        <Page title="Products">
-            <Card>
-                <DataTable
-                    columnContentTypes={[
-                        'text',
-                        'text',
-                        'text',
-                        'text'
-                    ]}
-                    headings={[
-                        '',
-                        'Product ID',
-                        'Product Name',
-                        ''
-                    ]}
-                    rows={
-                        products.edges.map(({ node }) => {
-                            const productId = node.id.split('/').pop() || '';
-                            const metafieldValue = node.metafields.edges.find(({ node }) => node.namespace === 'custom' && node.key === 'button_add_to_cart_text')?.node.value;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const toggleModal = () => setIsModalOpen((prev) => !prev);
 
-                            return [
-                                <Thumbnail
-                                    source={node.media.edges[0]?.node.image.url || ''}
-                                    alt={node.media.edges[0]?.node.image.altText || ''}
-                                />,
-                                productId,
-                                node.title,
-                                <>
-                                    <TextField
-                                        label="Add to Cart Name"
-                                        type="text"
-                                        value={userInteracted[productId] ? addToCartNameStates[productId] : (addToCartNameStates[productId] || metafieldValue)}
-                                        autoComplete="off"
-                                        onChange={(value) => handleInputChange(value, productId)}
-                                        loading={loadingStates[productId] || false}
-                                        error={errorStates[productId] || ''}
-                                    />
-                                    <Button
-                                        variant="primary"
-                                        onClick={() => handleSubmitFromList(productId)}
-                                    >
-                                        Submit
-                                    </Button>
-                                </>,
-                            ]
-                        })
-                    } 
-                />
-            </Card>
+    return (
+        <Page>
+            <TitleBar title="Products">
+                <button variant="primary" onClick={toggleModal}>
+                    Add Product
+                </button>
+            </TitleBar>
+            <ProductTable products={products} />
+            <AddProduct isOpen={isModalOpen} toggleModal={toggleModal}/>
         </Page>
     );
 }

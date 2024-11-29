@@ -6,11 +6,9 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import tailwindStyles from "./styles/tailwind.css";
 
 export let links: LinksFunction = () => {
   return [
-    { rel: "stylesheet", href: tailwindStyles }, // Use the imported Tailwind CSS
     {
       rel: "stylesheet",
       href: "https://cdn.shopify.com/static/fonts/inter/v4/styles.css",
@@ -19,6 +17,10 @@ export let links: LinksFunction = () => {
       rel: "preconnect",
       href: "https://cdn.shopify.com/",
     },
+    {
+      rel: "stylesheet",
+      href: "./styles/style.css"
+    }
   ];
 };
 
