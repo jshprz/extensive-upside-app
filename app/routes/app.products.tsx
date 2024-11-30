@@ -1,11 +1,12 @@
 import { ActionFunctionArgs, json, LoaderFunctionArgs } from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
-import { Button, Card, DataTable, Divider, Page, TextField, Thumbnail } from "@shopify/polaris";
+import { Page, useIndexResourceState } from "@shopify/polaris";
 import { authenticate } from "app/shopify.server";
 import { useEffect, useState } from "react";
 import ProductTable from "app/components/products-page/ProductTable";
 import AddProduct from "app/components/products-page/AddProduct";
+import SearchProduct from "app/components/products-page/SearchProduct";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const { admin } = await authenticate.admin(request);
@@ -187,6 +188,9 @@ export default function ProductsPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const toggleModal = () => setIsModalOpen((prev) => !prev);
 
+    const { selectedResources, allResourcesSelected, handleSelectionChange } =
+    useIndexResourceState(products.edges.map(({ node }) => ({ id: node.id })));
+    
     return (
         <Page>
             <TitleBar title="Products">
@@ -194,7 +198,13 @@ export default function ProductsPage() {
                     Add Product
                 </button>
             </TitleBar>
-            <ProductTable products={products} />
+            <SearchProduct selectedResourcesLength={selectedResources.length} />
+            <ProductTable 
+                products={products}
+                selectedResources={selectedResources}
+                allResourcesSelected={allResourcesSelected}
+                handleSelectionChange={handleSelectionChange}
+            />
             <AddProduct isOpen={isModalOpen} toggleModal={toggleModal}/>
         </Page>
     );

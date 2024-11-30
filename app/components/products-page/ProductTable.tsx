@@ -1,9 +1,7 @@
 import {
     IndexTable,
     LegacyCard,
-    useIndexResourceState,
     Text,
-    Badge,
     Thumbnail,
     Button,
 } from '@shopify/polaris';
@@ -36,17 +34,22 @@ interface ProductTableProps {
             };
         }[];
     };
+    selectedResources: string[];
+    allResourcesSelected: boolean;
+    handleSelectionChange: any;
 }
 
-export default function ProductTable({ products }:  ProductTableProps) {
+export default function ProductTable({ 
+    products,
+    selectedResources,
+    allResourcesSelected,
+    handleSelectionChange,
+}:  ProductTableProps) {
     const resourceName = {
         singular: 'product',
         plural: 'products',
     };
-  
-    const {selectedResources, allResourcesSelected, handleSelectionChange} =
-    useIndexResourceState(products.edges.map(({ node }) => ({ id: node.id })));
-    
+
     const rowMarkup = products.edges.map(({ node }, index) => {
         const productId = node.id.split('/').pop() || '';
 
