@@ -48,7 +48,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
             }
         }
     `;
-
+    
     try {
         const response = await admin.graphql(query);
         const responseJson = await response.json();

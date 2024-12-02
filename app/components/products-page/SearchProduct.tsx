@@ -7,20 +7,16 @@ interface SearchProductProps {
 
 export default function SearchProduct({ selectedResourcesLength }: SearchProductProps) {
     const [searchValue, setSearchValue] = useState('');
+    const [active, setActive] = useState(false);
+    const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(true);
 
     const handleSearchChange = useCallback((newValue: string) => {
       setSearchValue(newValue);
     }, []);
-
     const handleSearch = useCallback(() => {
       console.log('Searching for:', searchValue);
       // Add your search logic here
     }, [searchValue]);
-
-    const [active, setActive] = useState(false);
-
-    const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(true);
-
     const toggleModal = () => setActive((active) => !active);
 
     useEffect(() => {
@@ -30,7 +26,7 @@ export default function SearchProduct({ selectedResourcesLength }: SearchProduct
             setDeleteButtonDisabled(true);
         }
     }, [selectedResourcesLength]);
-
+    
     return (
         <>
             <Card>
