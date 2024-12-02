@@ -4,7 +4,7 @@ import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { Page, useIndexResourceState } from "@shopify/polaris";
 import { authenticate } from "app/shopify.server";
 import { useEffect, useState } from "react";
-import ProductTable from "app/components/products-page/ProductTable";
+import ProductTable1 from "app/components/products-page/product-tables/ProductTable1";
 import AddProduct from "app/components/products-page/AddProduct";
 import SearchProduct from "app/components/products-page/SearchProduct";
 
@@ -18,6 +18,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
                     node {
                         id
                         title
+                        totalInventory
                         media(first: 1) {
                             edges {
                                 node {
@@ -122,6 +123,7 @@ export default function ProductsPage() {
                 node: {
                     id: string;
                     title: string;
+                    totalInventory: number;
                     media: {
                         edges: {
                             node: {
@@ -199,13 +201,13 @@ export default function ProductsPage() {
                 </button>
             </TitleBar>
             <SearchProduct selectedResourcesLength={selectedResources.length} />
-            <ProductTable 
+            <ProductTable1 
                 products={products}
                 selectedResources={selectedResources}
                 allResourcesSelected={allResourcesSelected}
                 handleSelectionChange={handleSelectionChange}
             />
-            <AddProduct isOpen={isModalOpen} toggleModal={toggleModal}/>
+            <AddProduct isOpen={isModalOpen} toggleModal={toggleModal} products={products}/>
         </Page>
     );
 }

@@ -12,6 +12,7 @@ interface ProductTableProps {
             node: {
                 id: string;
                 title: string;
+                totalInventory: number;
                 media: {
                     edges: {
                         node: {
@@ -39,7 +40,7 @@ interface ProductTableProps {
     handleSelectionChange: any;
 }
 
-export default function ProductTable({ 
+export default function ProductTable2({ 
     products,
     selectedResources,
     allResourcesSelected,
@@ -72,14 +73,7 @@ export default function ProductTable({
                     </Text>
                 </IndexTable.Cell>
                 <IndexTable.Cell>{node.title}</IndexTable.Cell>
-                <IndexTable.Cell>
-                    <Button
-                        variant="secondary"
-                        onClick={() => {}}
-                    >
-                        Delete
-                    </Button>
-                </IndexTable.Cell>
+                <IndexTable.Cell>{node.totalInventory}</IndexTable.Cell>
             </IndexTable.Row>
         )
     });
@@ -95,8 +89,8 @@ export default function ProductTable({
           onSelectionChange={handleSelectionChange}
           headings={[
             {title: ''},
-            {title: 'Product ID'},
-            {title: 'Product Name'},
+            {title: ''},
+            {title: ''},
             {title: ''},
           ]}
         >

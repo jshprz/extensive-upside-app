@@ -3,7 +3,7 @@
 client_id = "1fed0065b9d95874dbe1ae069cd2ea13"
 name = "josh-dev"
 handle = "josh-dev"
-application_url = "https://transparent-lightweight-smtp-constant.trycloudflare.com"
+application_url = "https://norm-fort-canyon-christine.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://transparent-lightweight-smtp-constant.trycloudflare.com/auth/callback",
-  "https://transparent-lightweight-smtp-constant.trycloudflare.com/auth/shopify/callback",
-  "https://transparent-lightweight-smtp-constant.trycloudflare.com/api/auth/callback"
+  "https://norm-fort-canyon-christine.trycloudflare.com/auth/callback",
+  "https://norm-fort-canyon-christine.trycloudflare.com/auth/shopify/callback",
+  "https://norm-fort-canyon-christine.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
