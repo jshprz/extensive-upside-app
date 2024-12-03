@@ -36,3 +36,12 @@ model ShopifyStoreThemeCustomContent {
 
   @@map("shopify_store_theme_custom_content")
 }
+
+model StagedProducts {
+  id        String  @id @default(uuid())
+  productId String  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  
+  @@map("staged_products")
+}
