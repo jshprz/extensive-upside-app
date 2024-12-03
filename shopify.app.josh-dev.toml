@@ -3,7 +3,7 @@
 client_id = "1fed0065b9d95874dbe1ae069cd2ea13"
 name = "josh-dev"
 handle = "josh-dev"
-application_url = "https://norm-fort-canyon-christine.trycloudflare.com"
+application_url = "https://infant-share-rendered-boss.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://norm-fort-canyon-christine.trycloudflare.com/auth/callback",
-  "https://norm-fort-canyon-christine.trycloudflare.com/auth/shopify/callback",
-  "https://norm-fort-canyon-christine.trycloudflare.com/api/auth/callback"
+  "https://infant-share-rendered-boss.trycloudflare.com/auth/callback",
+  "https://infant-share-rendered-boss.trycloudflare.com/auth/shopify/callback",
+  "https://infant-share-rendered-boss.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

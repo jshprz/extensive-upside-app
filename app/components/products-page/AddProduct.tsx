@@ -8,47 +8,18 @@ import {
 } from '@shopify/polaris';
 import {useState, useCallback} from 'react';
 import ProductTable2 from './product-tables/ProductTable2';
+import IProducts from 'app/interfaces/IProducts';
 
-interface AddProductProps {
+interface AddProductProps extends IProducts {
   isOpen: boolean;
   toggleModal: () => void;
-  products: {
-    edges: {
-        node: {
-            id: string;
-            title: string;
-            totalInventory: number;
-            media: {
-                edges: {
-                    node: {
-                        image: {
-                            url: string;
-                            altText: string;
-                        };
-                    };
-                }[];
-            };
-            metafields: {
-                edges: {
-                    node: {
-                        namespace: string;
-                        key: string;
-                        value: string;
-                    };
-                }[];
-            };
-        };
-    }[];
-  };
 }
 
 export default function AddProduct({ isOpen, toggleModal, products }: AddProductProps) {
-    const [checked, setChecked] = useState(false);
-    const handleCheckbox = useCallback((value: boolean) => setChecked(value), []);
     const [searchValue, setSearchValue] = useState('');
-
     const { selectedResources, allResourcesSelected, handleSelectionChange } =
     useIndexResourceState(products.edges.map(({ node }) => ({ id: node.id })));
+    
     const handleSearchChange = useCallback((newValue: string) => {
       setSearchValue(newValue);
     }, []);

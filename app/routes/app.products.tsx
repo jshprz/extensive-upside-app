@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import ProductTable1 from "app/components/products-page/product-tables/ProductTable1";
 import AddProduct from "app/components/products-page/AddProduct";
 import SearchProduct from "app/components/products-page/SearchProduct";
+import IProducts from "app/interfaces/IProducts";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const { admin } = await authenticate.admin(request);
@@ -117,36 +118,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export default function ProductsPage() {
     const shopify = useAppBridge();
-    const { products } = useLoaderData<{
-        products: {
-            edges: {
-                node: {
-                    id: string;
-                    title: string;
-                    totalInventory: number;
-                    media: {
-                        edges: {
-                            node: {
-                                image: {
-                                    url: string;
-                                    altText: string;
-                                };
-                            };
-                        }[];
-                    };
-                    metafields: {
-                        edges: {
-                            node: {
-                                namespace: string;
-                                key: string;
-                                value: string;
-                            };
-                        }[];
-                    };
-                };
-            }[];
-        };
-    }>();
+    const { products } = useLoaderData<IProducts>();
     const fetcher = useFetcher<typeof action>();
 
     const [addToCartNameStates, setAddToCartNameStates] = useState<{ [key: string]: string }>({});

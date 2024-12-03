@@ -5,36 +5,9 @@ import {
     Thumbnail,
     Button,
 } from '@shopify/polaris';
+import IProducts from 'app/interfaces/IProducts';
 
-interface ProductTableProps {
-    products: {
-        edges: {
-            node: {
-                id: string;
-                title: string;
-                totalInventory: number;
-                media: {
-                    edges: {
-                        node: {
-                            image: {
-                                url: string;
-                                altText: string;
-                            };
-                        };
-                    }[];
-                };
-                metafields: {
-                    edges: {
-                        node: {
-                            namespace: string;
-                            key: string;
-                            value: string;
-                        };
-                    }[];
-                };
-            };
-        }[];
-    };
+interface ProductTableProps extends IProducts {
     selectedResources: string[];
     allResourcesSelected: boolean;
     handleSelectionChange: any;
