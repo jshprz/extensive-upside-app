@@ -9,6 +9,9 @@ import AddProduct from "app/components/products-page/AddProduct";
 import SearchProduct from "app/components/products-page/SearchProduct";
 import IProducts from "app/interfaces/IProducts";
 import IProductsByProductIds from "app/interfaces/IProductsByProductIds";
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const { admin } = await authenticate.admin(request);
