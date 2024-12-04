@@ -5,16 +5,16 @@ import {
     Thumbnail,
     Button,
 } from '@shopify/polaris';
-import IProducts from 'app/interfaces/IProducts';
+import IProductsByProductIds from 'app/interfaces/IProductsByProductIds';
 
-interface ProductTableProps extends IProducts {
+interface ProductTableProps extends IProductsByProductIds {
     selectedResources: string[];
     allResourcesSelected: boolean;
     handleSelectionChange: any;
 }
 
 export default function ProductTable1({ 
-    products,
+    productsByProductIds,
     selectedResources,
     allResourcesSelected,
     handleSelectionChange,
@@ -24,7 +24,7 @@ export default function ProductTable1({
         plural: 'products',
     };
 
-    const rowMarkup = products.edges.map(({ node }, index) => {
+    const rowMarkup = productsByProductIds.nodes.map((node, index) => {
         const productId = node.id.split('/').pop() || '';
 
         return (
@@ -46,14 +46,6 @@ export default function ProductTable1({
                     </Text>
                 </IndexTable.Cell>
                 <IndexTable.Cell>{node.title}</IndexTable.Cell>
-                <IndexTable.Cell>
-                    <Button
-                        variant="secondary"
-                        onClick={() => {}}
-                    >
-                        Delete
-                    </Button>
-                </IndexTable.Cell>
             </IndexTable.Row>
         )
     });
@@ -62,7 +54,7 @@ export default function ProductTable1({
       <LegacyCard>
         <IndexTable
           resourceName={resourceName}
-          itemCount={products.edges.length}
+          itemCount={productsByProductIds.nodes.length}
           selectedItemsCount={
             allResourcesSelected ? 'All' : selectedResources.length
           }
@@ -71,7 +63,6 @@ export default function ProductTable1({
             {title: ''},
             {title: 'Product ID'},
             {title: 'Product Name'},
-            {title: ''},
           ]}
         >
           {rowMarkup}

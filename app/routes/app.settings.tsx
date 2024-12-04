@@ -11,9 +11,14 @@ import {
 import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { useCallback, useEffect, useState } from "react";
 import { json } from "@remix-run/node";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionFunction, LinksFunction, LoaderFunction } from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { PrismaClient, ShopifyStoreThemeCustomContent } from "@prisma/client";
+import customcss from "app/styles/style.css?url";
+
+export const links: LinksFunction = () => {
+  return [{ rel: "stylesheet", href: customcss }];
+};
 
 const prisma = new PrismaClient();
 const store = 'quickstart-3e2e3242';

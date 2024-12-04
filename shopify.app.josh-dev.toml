@@ -3,7 +3,7 @@
 client_id = "1fed0065b9d95874dbe1ae069cd2ea13"
 name = "josh-dev"
 handle = "josh-dev"
-application_url = "https://vb-filter-orlando-packing.trycloudflare.com"
+application_url = "https://linda-incentives-ivory-purchases.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://vb-filter-orlando-packing.trycloudflare.com/auth/callback",
-  "https://vb-filter-orlando-packing.trycloudflare.com/auth/shopify/callback",
-  "https://vb-filter-orlando-packing.trycloudflare.com/api/auth/callback"
+  "https://linda-incentives-ivory-purchases.trycloudflare.com/auth/callback",
+  "https://linda-incentives-ivory-purchases.trycloudflare.com/auth/shopify/callback",
+  "https://linda-incentives-ivory-purchases.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

@@ -11,7 +11,7 @@ interface ProductTableProps extends IProducts {
     selectedResources: string[];
     allResourcesSelected: boolean;
     handleSelectionChange: any;
-}
+} 
 
 export default function ProductTable2({ 
     products,

@@ -3,20 +3,17 @@ import { useCallback, useEffect, useState } from "react";
 
 interface SearchProductProps {
     selectedResourcesLength: number;
+    searchValue: string;
+    onSearchChange: (value: string) => void;
 }
 
-export default function SearchProduct({ selectedResourcesLength }: SearchProductProps) {
-    const [searchValue, setSearchValue] = useState('');
+export default function SearchProduct({ selectedResourcesLength, searchValue, onSearchChange }: SearchProductProps) {
     const [active, setActive] = useState(false);
     const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(true);
 
     const handleSearchChange = useCallback((newValue: string) => {
-      setSearchValue(newValue);
-    }, []);
-    const handleSearch = useCallback(() => {
-      console.log('Searching for:', searchValue);
-      // Add your search logic here
-    }, [searchValue]);
+        onSearchChange(newValue);
+      }, [onSearchChange]);
     const toggleModal = () => setActive((active) => !active);
 
     useEffect(() => {
@@ -26,7 +23,7 @@ export default function SearchProduct({ selectedResourcesLength }: SearchProduct
             setDeleteButtonDisabled(true);
         }
     }, [selectedResourcesLength]);
-    
+
     return (
         <>
             <Card>
@@ -40,7 +37,6 @@ export default function SearchProduct({ selectedResourcesLength }: SearchProduct
                             placeholder="Search"
                             autoComplete="off"
                         />
-                        <Button onClick={handleSearch}>Search</Button>
                     </LegacyStack>
                     <Button variant="primary" disabled={deleteButtonDisabled} onClick={toggleModal}>
                         Delete

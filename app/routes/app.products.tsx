@@ -3,16 +3,17 @@ import { useFetcher, useLoaderData } from "@remix-run/react";
 import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { Page, useIndexResourceState } from "@shopify/polaris";
 import { authenticate } from "app/shopify.server";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ProductTable1 from "app/components/products-page/product-tables/ProductTable1";
 import AddProduct from "app/components/products-page/AddProduct";
 import SearchProduct from "app/components/products-page/SearchProduct";
 import IProducts from "app/interfaces/IProducts";
+import IProductsByProductIds from "app/interfaces/IProductsByProductIds";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
     const { admin } = await authenticate.admin(request);
 
-    const query = `
+    const queryProducts = `
         query {
             products(first: 100) {
                 edges {
@@ -50,12 +51,55 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
             }
         }
     `;
-    
-    try {
-        const response = await admin.graphql(query);
-        const responseJson = await response.json();
+    const queryProductsByProductIds = `
+        query ($productIds: [ID!]!) {
+            nodes(ids: $productIds) {
+                ... on Product {
+                    id
+                    title
+                    totalInventory
+                    media(first: 1) {
+                        edges {
+                            node {
+                                ... on MediaImage {
+                                    image {
+                                        url
+                                        altText
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    metafields(first: 10) {
+                        edges {
+                            node {
+                                namespace
+                                key
+                                value
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    `;
 
-        return responseJson.data;
+    try {
+        const stagedProductIds = await prisma.stagedProducts.findMany({ select: {productId: true} });
+        const queryProductsByProductIdsVariables = {
+            productIds: stagedProductIds.map(({ productId }) => productId)
+        };
+        const [productsResponse, productsByProductIdsResponse] = await Promise.all([
+            admin.graphql(queryProducts),
+            admin.graphql(queryProductsByProductIds, { variables: queryProductsByProductIdsVariables }),
+        ]);
+        const productsJson = await productsResponse.json();
+        const productsByProductIds = await productsByProductIdsResponse.json();
+        
+        return json({
+            products: productsJson.data.products,
+            productsByProductIds: productsByProductIds.data,
+        });
     } catch (error) {
         console.error("Error fetching products: ", error);
         return json({ error: (error as any).message }, { status: 500 });
@@ -133,9 +177,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 //     }
 // };
 
+interface IUseLoaderData extends IProducts, IProductsByProductIds {}
+
+
 export default function ProductsPage() {
     const shopify = useAppBridge();
-    const { products } = useLoaderData<IProducts>();
+    const { products, productsByProductIds } = useLoaderData<IUseLoaderData>();
     const fetcher = useFetcher<typeof action>();
 
     const [addToCartNameStates, setAddToCartNameStates] = useState<{ [key: string]: string }>({});
@@ -144,6 +191,7 @@ export default function ProductsPage() {
     const [errorStates, setErrorStates] = useState<{ [key: string]: string }>({});
     const [userInteracted, setUserInteracted] = useState<{ [key: string]: boolean }>({});
     const [addProductsClickLoading, setAddProductsClickLoading] = useState(false);
+    const [searchProductValue, setSearchProductValue] = useState('');
     
     const handleSubmitFromList = async (productId: string) => {
         setProductIdHolder(productId);
@@ -202,9 +250,23 @@ export default function ProductsPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const toggleModal = () => setIsModalOpen((prev) => !prev);
 
-    const { selectedResources, allResourcesSelected, handleSelectionChange } =
-    useIndexResourceState(products.edges.map(({ node }) => ({ id: node.id })));
-    
+    const filteredProductsByProductIds = useMemo(() => {
+        if (!searchProductValue) return productsByProductIds;
+        return {
+            nodes: productsByProductIds.nodes.filter((node) =>
+                node.title.toLowerCase().includes(searchProductValue.toLowerCase())
+            ),
+        };
+    }, [productsByProductIds, searchProductValue]);
+
+    const { selectedResources, allResourcesSelected, handleSelectionChange, clearSelection } =
+    useIndexResourceState(filteredProductsByProductIds.nodes.map((node) => ({ id: node.id })));
+
+    const handleSearchChange = useCallback((newValue: string) => {
+        setSearchProductValue(newValue);
+        clearSelection();
+    }, [clearSelection]);
+
     return (
         <Page>
             <TitleBar title="Products">
@@ -212,17 +274,21 @@ export default function ProductsPage() {
                     Add Product
                 </button>
             </TitleBar>
-            <SearchProduct selectedResourcesLength={selectedResources.length} />
+            <SearchProduct
+                selectedResourcesLength={selectedResources.length}
+                searchValue={searchProductValue}
+                onSearchChange={handleSearchChange}
+            />
             <ProductTable1 
-                products={products}
+                productsByProductIds={filteredProductsByProductIds}
                 selectedResources={selectedResources}
                 allResourcesSelected={allResourcesSelected}
                 handleSelectionChange={handleSelectionChange}
             />
-            <AddProduct 
+            <AddProduct
+                products={products}
                 isOpen={isModalOpen}
                 toggleModal={toggleModal}
-                products={products}
                 onAddProducts={handleAddProducts}
                 loading={addProductsClickLoading}
             />

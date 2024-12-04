@@ -17,7 +17,7 @@ interface AddProductProps extends IProducts {
   loading: boolean;
 }
 
-export default function AddProduct({ isOpen, toggleModal, products, onAddProducts, loading }: AddProductProps) {
+export default function AddProduct({ products, isOpen, toggleModal, onAddProducts, loading }: AddProductProps) {
   const [searchValue, setSearchValue] = useState('');
   const [onAddProductsDisabled, setOnAddProductsDisabled] = useState(false);
   const { selectedResources, allResourcesSelected, handleSelectionChange, clearSelection } =

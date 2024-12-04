@@ -16,10 +16,6 @@ export let links: LinksFunction = () => {
     {
       rel: "preconnect",
       href: "https://cdn.shopify.com/",
-    },
-    {
-      rel: "stylesheet",
-      href: "./styles/style.css"
     }
   ];
 };
