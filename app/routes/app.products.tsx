@@ -98,7 +98,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         ]);
         const productsJson = await productsResponse.json();
         const productsByProductIds = await productsByProductIdsResponse.json();
-        
+        if (productsByProductIds.data.nodes.includes(null)) {
+            productsByProductIds.data.nodes = productsByProductIds.data.nodes.filter((node: null) => node !== null);            
+        }
+
         return json({
             products: productsJson.data.products,
             productsByProductIds: productsByProductIds.data,
