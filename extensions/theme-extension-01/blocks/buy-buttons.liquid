@@ -9,15 +9,14 @@
           }
       });
 
-      // Add custom note below the pre-order button
-      const customNote = 'LALALAND';
+      const customNote = `{{ product.metafields.custom.custom_note.value }}`;
       if (customNote) {
-          addToCartButton.forEach(button => {
-              const noteElement = document.createElement('div');
-              noteElement.innerHTML = customNote;
-              noteElement.classList.add('custom-note');
-              button.insertAdjacentElement('afterend', noteElement);
-          });
+        addToCartButton.forEach(button => {
+          const noteElement = document.createElement('div');
+          noteElement.innerHTML = customNote;
+          noteElement.classList.add('custom-note');
+          button.insertAdjacentElement('afterend', noteElement);
+        });
       }
   });
 </script>

@@ -44,7 +44,7 @@ export default function AddToCartTextForm() {
         productsByProductIds.nodes.forEach((product) => formData.append('productIds', product.id));
         fetcher.submit(
             formData,
-            { method: 'POST', action: '/api/add-to-cart-text' }
+            { method: 'POST', action: '/api/submit-add-to-cart-text-form' }
         );
     }, [fetcher, addToCartName]);
 

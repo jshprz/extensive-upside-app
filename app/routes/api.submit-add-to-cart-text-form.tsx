@@ -50,7 +50,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         metafieldsSet: mutationResponseJson.data.metafieldsSet,
       });
   } catch (error) {
-      console.error("Error adding product to cart: ", error);
+      console.error("Error creating add to cart text metafield: ", error);
       return json({ error: (error as any).message }, { status: 500 });
   }
 };
