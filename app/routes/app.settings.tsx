@@ -11,90 +11,152 @@ import {
 import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { useCallback, useEffect, useState } from "react";
 import { json } from "@remix-run/node";
-import type { ActionFunction, LinksFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionFunction, ActionFunctionArgs, LinksFunction, LoaderFunction } from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import { PrismaClient, ShopifyStoreThemeCustomContent } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import customcss from "app/styles/style.css?url";
+import { authenticate } from "app/shopify.server";
+import IProductsByProductIds from "app/interfaces/IProductsByProductIds";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: customcss }];
 };
 
 const prisma = new PrismaClient();
-const store = 'quickstart-3e2e3242';
-const themeId = '137013952605';
   
 export const loader: LoaderFunction = async ({ request }) => {
-  try {
-    const getThemeCustomContent = await prisma.shopifyStoreThemeCustomContent.findFirst({
-      where: {
-        store,
-        themeId,
-        key: 'add_to_cart_button_text',
-      }
-    });
+  const { admin } = await authenticate.admin(request);
 
-    return json(getThemeCustomContent || { id: '', value: '' });
+  const queryProductsByProductIds = `
+    query ($productIds: [ID!]!) {
+      nodes(ids: $productIds) {
+        ... on Product {
+          id
+          title
+          totalInventory
+          media(first: 1) {
+            edges {
+              node {
+                ... on MediaImage {
+                  image {
+                    url
+                    altText
+                  }
+                }
+              }
+            }
+          }
+          metafields(first: 10) {
+            edges {
+              node {
+                namespace
+                key
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const stagedProductIds = await prisma.stagedProducts.findMany({ select: {productId: true} });
+    const queryProductsByProductIdsVariables = {
+        productIds: stagedProductIds.map(({ productId }) => productId)
+    };
+    const productsByProductIdsResponse = await admin.graphql(queryProductsByProductIds, { variables: queryProductsByProductIdsVariables });
+    const productsByProductIds = await productsByProductIdsResponse.json();
+    
+    if (productsByProductIds.data.nodes.includes(null)) {
+      productsByProductIds.data.nodes = productsByProductIds.data.nodes.filter((node: null) => node !== null);            
+    }
+
+    return json({
+      productsByProductIds: productsByProductIds.data,
+    });
   } catch (error) {
-    console.error("Error Response: ", (error as any).message);
+    console.error("Error fetching products: ", error);
     return json({ error: (error as any).message }, { status: 500 });
   }
 }
 
-export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const addToCartName = formData.get('add-to-cart-name');
-  const key = 'add_to_cart_button_text';
+export const action = async ({ request }: ActionFunctionArgs) => {
+    const { admin } = await authenticate.admin(request);
+    const formData = await request.formData();
 
-  if (!addToCartName) {
-    return json({ error: 'Add to cart name is required' }, { status: 400 });
-  }
+     const productIds = formData.getAll('productIds') || [];
+     const addToCartName = formData.get('add-to-cart-name') || '';
 
-  try {
-    const getThemeCustomContent = await prisma.shopifyStoreThemeCustomContent.findFirst({
-      where: {
-        store,
-        themeId,
-        key,
-      }
-    });
+     const metafields = productIds.map((productId) => ({
+         key: 'button_add_to_cart_text',
+         namespace: 'custom',
+         value: addToCartName,
+         type: 'single_line_text_field',
+         ownerId: productId,
+     }));
 
-    if (getThemeCustomContent && getThemeCustomContent.id) {
-      const updatedShopifyStoreThemeCustomContent = await prisma.shopifyStoreThemeCustomContent.update({
-        where: {
-          id: getThemeCustomContent.id,
-        },
-        data: {
-          value: addToCartName as string,
+    const mutation = `
+        #graphql
+        mutation MetafieldsSet($metafields: [MetafieldsSetInput!]!) {
+            metafieldsSet(metafields: $metafields) {
+              metafields {
+                key
+                namespace
+                value
+                createdAt
+                updatedAt
+              }
+              userErrors {
+                field
+                message
+                code
+              }
+            }
         }
-      });
+    `;
+    const variables = { metafields };
 
-      return json(updatedShopifyStoreThemeCustomContent);
-    } else {
-      const newShopifyStoreThemeCustomContent = await prisma.shopifyStoreThemeCustomContent.create({
-        data: {
-          store,
-          themeId,
-          key,
-          value: addToCartName as string,
+    try {
+        const mutationResponse = await admin.graphql(mutation, { variables });
+        const mutationResponseJson = await mutationResponse.json();
+
+        if (mutationResponseJson.data.metafieldsSet.userErrors.length > 0) {
+            throw new Error(mutationResponseJson.data.metafieldsSet.userErrors[0].message);
         }
-      });
-
-      return json(newShopifyStoreThemeCustomContent);
+        
+        return json({
+          metafieldsSet: mutationResponseJson.data.metafieldsSet,
+        });
+    } catch (error) {
+        console.error("Error adding product to cart: ", error);
+        return json({ error: (error as any).message }, { status: 500 });
     }
-  } catch (error) {
-    console.error("Error Response: ", (error as any).message);
-    return json({ error: (error as any).message }, { status: 500 });
-  }
 };
+
+interface IUseLoaderData extends IProductsByProductIds {}
+
+interface Metafield {
+  key: string;
+  namespace: string;
+  value: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface MetafieldsSetResponse {
+  metafieldsSet: {
+    metafields: Metafield[];
+    userErrors: { field: string[]; message: string; code: string }[];
+  };
+}
 
 export default function SettingsPage() {
   const shopify = useAppBridge();
-  const fetcher = useFetcher();
-  const data = useLoaderData<ShopifyStoreThemeCustomContent>();
-  const createdShopifyStoreThemeCustomContent = fetcher.data as ShopifyStoreThemeCustomContent;
+  const fetcher = useFetcher<MetafieldsSetResponse>();
+  const { productsByProductIds } = useLoaderData<IUseLoaderData>();
   
-  const [addToCartName, setAddToCartName] = useState<string>(data.value);
+  const [addToCartName, setAddToCartName] = useState<string>('');
   const [error, setError] = useState<string | undefined>(undefined);
   const [value, setValue] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('English');
@@ -104,6 +166,7 @@ export default function SettingsPage() {
       event.preventDefault();
       const formData = new FormData(event.currentTarget);
       formData.set('add-to-cart-name', addToCartName);
+      productsByProductIds.nodes.forEach((product) => formData.append('productIds', product.id));
       fetcher.submit(formData, { method: 'post' });
   }, [fetcher, addToCartName]);
   
@@ -116,10 +179,15 @@ export default function SettingsPage() {
   }, [fetcher.data]);
 
   useEffect(() => {
-      if (createdShopifyStoreThemeCustomContent && createdShopifyStoreThemeCustomContent.id) {
-        shopify.toast.show("Add to cart name updated successfully!");
-      }
-  }, [createdShopifyStoreThemeCustomContent, shopify]);
+    if (fetcher.data && fetcher.data.metafieldsSet.metafields.length > 0) {
+      console.info('Metafields updated:', fetcher.data.metafieldsSet.metafields);
+      shopify.toast.show(`${fetcher.data.metafieldsSet.metafields.length} product/s add to cart name updated successfully!`);
+    }
+    if (fetcher.data && fetcher.data.metafieldsSet.userErrors.length > 0) {
+      console.error('Metafield creation error:', fetcher.data.metafieldsSet.userErrors[0].message);
+      shopify.toast.show(fetcher.data.metafieldsSet.userErrors[0].message, { isError: true });
+    }
+  }, [fetcher.data]);
 
   const handleSelectChange = useCallback(
       (value: string) => setSelectedLanguage(value),
@@ -172,7 +240,7 @@ export default function SettingsPage() {
                         error={error}
                         autoComplete="off"
                       />
-                      <Button variant="primary" submit loading={fetcher.state === 'submitting'} fullWidth>
+                      <Button variant="primary" submit loading={fetcher.state === 'submitting' || fetcher.state === 'loading'} fullWidth>
                         Save
                       </Button>
                     </FormLayout>
@@ -195,11 +263,11 @@ export default function SettingsPage() {
                           <div className="p-2">
                               <h1><b>Custom Note</b></h1>
                               <TextField
-                                  label="Add in a custom note with your pre-order. This will display below the pre-order button on your product page (Support HTML syntax)"
-                                  value={value}
-                                  onChange={handleChange}
-                                  multiline={4}
-                                  autoComplete="off"
+                                label="Add in a custom note with your pre-order. This will display below the pre-order button on your product page (Support HTML syntax)"
+                                value={value}
+                                onChange={handleChange}
+                                multiline={4}
+                                autoComplete="off"
                               />
                           </div>
                           <Button variant="primary" submit loading={fetcher.state === 'submitting'} fullWidth>
