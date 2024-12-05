@@ -1,28 +1,52 @@
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const addToCartButton = document.querySelectorAll('[id^="ProductSubmitButton-"]');
+  document.addEventListener('DOMContentLoaded', () => {
+      const addToCartButton = document.querySelectorAll('[id^="ProductSubmitButton-"]');
 
-        addToCartButton.forEach(button => {
-          const textElement = button.querySelector('span');
-            if (textElement) {
-                textElement.innerHTML = '{{ product.metafields.custom.button_add_to_cart_text | escape }}' || 'Add to Cart';
-            }
-        });
-    });
-  </script>
-  
-  {% schema %}
-  {
-    "name": "Buy Buttons Embed",
-    "target": "body",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "enable_buy_buttons",
-        "label": "Enable Custom Buy Buttons",
-        "default": true
+      addToCartButton.forEach(button => {
+        const textElement = button.querySelector('span');
+          if (textElement) {
+              textElement.innerHTML = '{{ product.metafields.custom.button_add_to_cart_text | escape }}' || 'Add to Cart';
+          }
+      });
+
+      // Add custom note below the pre-order button
+      const customNote = 'LALALAND';
+      if (customNote) {
+          addToCartButton.forEach(button => {
+              const noteElement = document.createElement('div');
+              noteElement.innerHTML = customNote;
+              noteElement.classList.add('custom-note');
+              button.insertAdjacentElement('afterend', noteElement);
+          });
       }
-    ]
+  });
+</script>
+
+<style>
+.custom-note {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+}
+</style>
+
+{% schema %}
+{
+"name": "Buy Buttons Embed",
+"target": "body",
+"settings": [
+  {
+    "type": "checkbox",
+    "id": "enable_buy_buttons",
+    "label": "Enable Custom Buy Buttons",
+    "default": true
+  },
+  {
+    "type": "textarea",
+    "id": "custom_note",
+    "label": "Custom Note",
+    "default": "Add in a custom note with your pre-order. This will display below the pre-order button on your product page (Support HTML syntax)."
   }
-  {% endschema %}
-  
+]
+}
+{% endschema %}
