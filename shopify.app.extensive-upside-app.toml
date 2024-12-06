@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "9fd34c71f2060efc15512f060b242916"
-application_url = "https://fuzzy-margaret-twist-flexible.trycloudflare.com"
+application_url = "https://comedy-predict-reads-jm.trycloudflare.com"
 embedded = true
 name = "extensive-upside-app"
 handle = "extensive-upside-app-15"
@@ -20,9 +20,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://fuzzy-margaret-twist-flexible.trycloudflare.com/auth/callback",
-  "https://fuzzy-margaret-twist-flexible.trycloudflare.com/auth/shopify/callback",
-  "https://fuzzy-margaret-twist-flexible.trycloudflare.com/api/auth/callback"
+  "https://comedy-predict-reads-jm.trycloudflare.com/auth/callback",
+  "https://comedy-predict-reads-jm.trycloudflare.com/auth/shopify/callback",
+  "https://comedy-predict-reads-jm.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
