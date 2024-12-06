@@ -1,15 +1,10 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "9fd34c71f2060efc15512f060b242916"
-application_url = "https://comedy-predict-reads-jm.trycloudflare.com"
+application_url = "https://retailers-begun-encyclopedia-brad.trycloudflare.com"
 embedded = true
 name = "extensive-upside-app"
 handle = "extensive-upside-app-15"
-
-[build]
-include_config_on_deploy = true
-dev_store_url = "quickstart-3e2e3242.myshopify.com"
-automatically_update_urls_on_dev = true
 
 [webhooks]
 api_version = "2024-10"
@@ -20,10 +15,14 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://comedy-predict-reads-jm.trycloudflare.com/auth/callback",
-  "https://comedy-predict-reads-jm.trycloudflare.com/auth/shopify/callback",
-  "https://comedy-predict-reads-jm.trycloudflare.com/api/auth/callback"
+  "https://retailers-begun-encyclopedia-brad.trycloudflare.com/auth/callback",
+  "https://retailers-begun-encyclopedia-brad.trycloudflare.com/auth/shopify/callback",
+  "https://retailers-begun-encyclopedia-brad.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
 embedded = false
+
+[build]
+dev_store_url = "quickstart-3e2e3242.myshopify.com"
+automatically_update_urls_on_dev = true

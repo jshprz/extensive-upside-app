@@ -1,0 +1,57 @@
+<div class="speech-bubble">
+    <div class="content">
+        <span class="icon">🚨</span>
+        <p><strong>⚠️ ALMOST GONE ⚠️</strong></p>
+        <p>Only {{ product.selected_or_first_available_variant.inventory_quantity }} Available</p>
+    </div>
+</div>
+
+<style>
+    .speech-bubble {
+        position: relative;
+        background: #f04e23;
+        border-radius: .4em;
+        height: 10rem;
+    }
+    .speech-bubble:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border: 15px solid transparent;
+        border-top-color: #f04e23;
+        border-bottom: 0;
+        margin-left: -15px;
+        margin-bottom: -15px;
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .icon {
+        font-size: 2rem;
+    }
+
+    p {
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    p strong {
+        font-size: 2rem;
+    }
+</style>
+
+{% schema %}
+{
+  "name": "Stock Notification",
+  "target": "section",
+  "settings": []
+}
+{% endschema %}

@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "038b89df51f2a6ec76517eb5f3b640f0"
-application_url = "https://metric-parties-applicants-t.trycloudflare.com"
+application_url = "https://stated-attempts-adopt-pat.trycloudflare.com"
 embedded = true
 name = "extensive-upside-app-v2"
 handle = "extensive-upside-app-v2"
@@ -20,9 +20,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://metric-parties-applicants-t.trycloudflare.com/auth/callback",
-  "https://metric-parties-applicants-t.trycloudflare.com/auth/shopify/callback",
-  "https://metric-parties-applicants-t.trycloudflare.com/api/auth/callback"
+  "https://stated-attempts-adopt-pat.trycloudflare.com/auth/callback",
+  "https://stated-attempts-adopt-pat.trycloudflare.com/auth/shopify/callback",
+  "https://stated-attempts-adopt-pat.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]

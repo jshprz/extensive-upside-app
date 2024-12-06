@@ -10,6 +10,7 @@ import customcss from "app/styles/style.css?url";
 import { authenticate } from "app/shopify.server";
 import AddToCartTextForm from "app/components/settings-page/AddToCartTextForm";
 import CustomNoteForm from "app/components/settings-page/CustomNoteForm";
+import StockNotificationForm from "app/components/settings-page/StockNotificationForm";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: customcss }];
@@ -64,7 +65,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     if (productsByProductIds.data.nodes.includes(null)) {
       productsByProductIds.data.nodes = productsByProductIds.data.nodes.filter((node: null) => node !== null);            
     }
-
+    
     return json({
       productsByProductIds: productsByProductIds.data,
     });
@@ -83,6 +84,7 @@ export default function SettingsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <AddToCartTextForm />
             <CustomNoteForm />
+            <StockNotificationForm />
           </div>
         </Layout.Section>
       </Layout>
