@@ -2,7 +2,11 @@
     <div class="content">
         <span class="icon">🚨</span>
         <p><strong>⚠️ ALMOST GONE ⚠️</strong></p>
-        <p>Only {{ product.selected_or_first_available_variant.inventory_quantity }} Available</p>
+        {% if product.metafields.custom.is_stock_notification_enabled == 'true' %}
+            <p> {{ product.metafields.custom.stock_notification }} </p>
+        {% else %}
+            <p> Only {{ product.selected_or_first_available_variant.inventory_quantity }} Available </p>
+        {% endif %}
     </div>
 </div>
 

@@ -3,7 +3,7 @@ import {
     LegacyCard,
     Text,
     Thumbnail,
-    Button,
+    Badge,
 } from '@shopify/polaris';
 import IProductsByProductIds from 'app/interfaces/IProductsByProductIds';
 
@@ -26,7 +26,14 @@ export default function ProductTable1({
 
     const rowMarkup = productsByProductIds.nodes.map((node, index) => {
         const productId = node.id.split('/').pop() || '';
-
+        const productStockNotificationIsEnabled = node.metafields.edges.filter((edge) => {
+            return edge.node.key === 'is_stock_notification_enabled' && edge.node.namespace === 'custom';
+        });
+        const isProductStockNotificationIsEnabled = (
+            productStockNotificationIsEnabled.length > 0 &&
+            productStockNotificationIsEnabled[0].node.value == 'true'
+        );
+        
         return (
             <IndexTable.Row
                 id={node.id}
@@ -46,6 +53,11 @@ export default function ProductTable1({
                     </Text>
                 </IndexTable.Cell>
                 <IndexTable.Cell>{node.title}</IndexTable.Cell>
+                <IndexTable.Cell>
+                    <Badge tone={isProductStockNotificationIsEnabled ? 'success' : undefined}>
+                        {isProductStockNotificationIsEnabled ? 'True' : 'False'}
+                    </Badge>
+                </IndexTable.Cell>
             </IndexTable.Row>
         )
     });
@@ -63,6 +75,7 @@ export default function ProductTable1({
             {title: ''},
             {title: 'Product ID'},
             {title: 'Product Name'},
+            {title: 'Is Stock Notification Enabled?'},
           ]}
         >
           {rowMarkup}

@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, json, LoaderFunctionArgs } from "@remix-run/node";
+import { ActionFunctionArgs, json, LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { TitleBar, useAppBridge } from "@shopify/app-bridge-react";
 import { Page, useIndexResourceState } from "@shopify/polaris";
@@ -10,6 +10,11 @@ import SearchProduct from "app/components/products-page/SearchProduct";
 import IProducts from "app/interfaces/IProducts";
 import IProductsByProductIds from "app/interfaces/IProductsByProductIds";
 import { PrismaClient } from '@prisma/client';
+import customcss from "app/styles/style.css?url";
+
+export const links: LinksFunction = () => {
+    return [{ rel: "stylesheet", href: customcss }];
+};
 
 const prisma = new PrismaClient();
 
@@ -204,6 +209,12 @@ export default function ProductsPage() {
         clearSelection();
     }, [clearSelection]);
 
+    const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
+
+    useEffect(() => {
+        setSelectedProductIds(selectedResources as string[]);
+    }, [selectedResources]);
+
     return (
         <Page>
             <TitleBar title="Products">
@@ -212,7 +223,7 @@ export default function ProductsPage() {
                 </button>
             </TitleBar>
             <SearchProduct
-                selectedResourcesLength={selectedResources.length}
+                selectedProductIds={selectedProductIds}
                 searchValue={searchProductValue}
                 onSearchChange={handleSearchChange}
             />

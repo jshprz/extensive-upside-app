@@ -3,13 +3,12 @@
 client_id = "1fed0065b9d95874dbe1ae069cd2ea13"
 name = "josh-dev"
 handle = "josh-dev"
-application_url = "https://lightweight-cashiers-chad-performed.trycloudflare.com"
+application_url = "https://laboratory-syndrome-himself-commercial.trycloudflare.com"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
 dev_store_url = "preorderapp1.myshopify.com"
-include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
@@ -17,9 +16,12 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://lightweight-cashiers-chad-performed.trycloudflare.com/auth/callback",
-  "https://lightweight-cashiers-chad-performed.trycloudflare.com/auth/shopify/callback",
-  "https://lightweight-cashiers-chad-performed.trycloudflare.com/api/auth/callback"
+  "https://nat-parent-eds-solution.trycloudflare.com/auth/callback",
+  "https://nat-parent-eds-solution.trycloudflare.com/auth/shopify/callback",
+  "https://nat-parent-eds-solution.trycloudflare.com/api/auth/callback",
+  "https://laboratory-syndrome-himself-commercial.trycloudflare.com/auth/callback",
+  "https://laboratory-syndrome-himself-commercial.trycloudflare.com/auth/shopify/callback",
+  "https://laboratory-syndrome-himself-commercial.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
@@ -27,7 +29,7 @@ api_version = "2024-10"
 
   [[webhooks.subscriptions]]
   topics = [ "app/uninstalled" ]
-  uri = "/webhooks/app/uninstalled"
+  uri = "https://robertson-milan-surf-limitation.trycloudflare.com/webhooks/app/uninstalled"
 
 [pos]
 embedded = false
