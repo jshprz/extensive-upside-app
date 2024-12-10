@@ -2,8 +2,8 @@
   "name": "extensive-upside-app",
   "private": true,
   "scripts": {
-    "build": "prisma generate && remix vite:build",
-    "dev": "shopify app dev",
+    "build": "remix vite:build",
+    "dev": "shopify app dev --no-update",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
     "deploy": "shopify app deploy",
