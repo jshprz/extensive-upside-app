@@ -3,7 +3,7 @@
 client_id = "038b89df51f2a6ec76517eb5f3b640f0"
 name = "extensive-upside-app-v2"
 handle = "extensive-upside-app-v2"
-application_url = "https://biol-za-headers-rapids.trycloudflare.com"
+application_url = "https://specials-cuts-spirituality-fx.trycloudflare.com"
 embedded = true
 
 [build]
@@ -22,7 +22,10 @@ redirect_urls = [
   "https://sea-lion-app-ojpqw.ondigitalocean.app/api/auth/callback",
   "https://biol-za-headers-rapids.trycloudflare.com/auth/callback",
   "https://biol-za-headers-rapids.trycloudflare.com/auth/shopify/callback",
-  "https://biol-za-headers-rapids.trycloudflare.com/api/auth/callback"
+  "https://biol-za-headers-rapids.trycloudflare.com/api/auth/callback",
+  "https://specials-cuts-spirituality-fx.trycloudflare.com/auth/callback",
+  "https://specials-cuts-spirituality-fx.trycloudflare.com/auth/shopify/callback",
+  "https://specials-cuts-spirituality-fx.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
