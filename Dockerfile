@@ -6,6 +6,8 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
+RUN apk update && apk add --no-cache openssl-dev
+
 COPY package.json package-lock.json* ./
 
 RUN npm ci --omit=dev && npm cache clean --force
