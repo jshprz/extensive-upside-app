@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18-slim
 
 EXPOSE 3000
 
@@ -6,7 +6,7 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-RUN apk update && apk add --no-cache openssl-dev
+RUN apt-get update && apt-get install -y libssl-dev && apt-get clean
 
 COPY package.json package-lock.json* ./
 
